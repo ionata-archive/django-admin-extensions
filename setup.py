@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Install django-admin-extensions using setuptools
+"""
 
 try:
     from setuptools import setup, find_packages
@@ -9,14 +12,20 @@ except ImportError:
 
 setup(
     name='django-admin-extensions',
-    version="0.1.0",
+    version="0.1.1",
     description='Simple tools to extend the django admin site',
     author='Ionata Web Solutions',
     author_email='webmaster@ionata.com.au',
     url='https://bitbucket.org/ionata/django-admin-extensions',
-    packages=['adminextensions'],
+
     install_requires=['Django>=1.4'],
-    package_data={},
+    zip_safe=False,
+
+    packages=find_packages(),
+
+    include_package_data=True,
+    package_data={ },
+
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
