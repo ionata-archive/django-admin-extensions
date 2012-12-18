@@ -10,8 +10,9 @@ functionality to the admin site. Extensions include:
 * A bunch of shortcuts for adding links to foreign keys, model searches,
   many-to-many relations, truncating fields in the model list, and more.
 
-TODO
-----
+Documentation
+-------------
 
-Write some better documentation. I just wanted to publish this quickly, so I
-can reuse it. Documentation WILL be coming.
+Documentation can be found [on Ionata's PyPI][docs].
+
+[docs]: http://pypi.ionata.com/django-admin-extensions/docs/
