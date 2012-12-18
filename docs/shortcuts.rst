@@ -39,6 +39,9 @@ should accept a single argument, which is the model instance::
             link_field('author', formatter=lambda a: a.full_name)
         )
 
+A short_description parameter is automatically generated based on the linked
+field name. To override this, use the ``short_description`` parameter.
+
 .. _shortcuts.model_link:
 
 ``model_link``
@@ -195,3 +198,6 @@ content fields that may have a lot of data. The data is truncated after
         )
 
     admin.site.register(Book, BookAdmin)
+
+A short_description parameter is automatically generated based on the linked
+field name. To override this, use the ``short_description`` parameter.
