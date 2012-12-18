@@ -3,6 +3,8 @@
 Install django-admin-extensions using setuptools
 """
 
+from adminextensions import __version__
+
 try:
     from setuptools import setup, find_packages
 except ImportError:
@@ -12,7 +14,7 @@ except ImportError:
 
 setup(
     name='django-admin-extensions',
-    version="0.1.2",
+    version=__version__,
     description='Simple tools to extend the django admin site',
     author='Ionata Web Solutions',
     author_email='webmaster@ionata.com.au',
