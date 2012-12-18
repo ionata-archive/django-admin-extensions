@@ -54,7 +54,12 @@ def make_admin_url(model, pk=None, action="change"):
     return url
 
 
-def link_field(field, action="change", formatter=unicode):
+def link_field(field, action="change", formatter=unicode,
+               short_description=None):
+
+    if short_description is None:
+        short_description = field
+
     def item(obj):
         related = getattr(obj, field)
 
@@ -65,7 +70,7 @@ def link_field(field, action="change", formatter=unicode):
 
         return link
 
-    item.short_description = field
+    item.short_description = short_description
     item.allow_tags = True
     return item
 
@@ -86,9 +91,12 @@ def serialized_many_to_many_field(field, formatter=escape, joiner=', ',
     return item
 
 
-def truncated_field(field, length=20):
+def truncated_field(field, length=20, short_description=None):
+    if short_description is None:
+        short_description = field
+
     item = lambda obj: truncatewords(getattr(obj, field), length)
-    item.short_description = field
+    item.short_description = short_description
     return item
 
 
