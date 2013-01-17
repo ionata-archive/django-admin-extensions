@@ -60,6 +60,8 @@ def link_field(field, action="change", formatter=unicode,
 
     def item(obj):
         related = getattr(obj, field)
+        if related is None:
+            return '(None)'
 
         url = make_admin_url(related, action=action)
         name = formatter(related)
