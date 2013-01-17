@@ -30,8 +30,6 @@ def model_link(text, model, pk_getter, action="change"):
     app_label = model._meta.app_label
     module_name = model._meta.module_name
 
-    url_name = 'admin:%s_%s_change' % (app_label, module_name)
-
     def tool(context):
         pk = pk_getter(context['original'])
         if pk:
