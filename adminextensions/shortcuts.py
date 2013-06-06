@@ -79,14 +79,16 @@ def link_field(field, action="change", formatter=unicode,
     return item
 
 
-def serialized_many_to_many_field(field, formatter=escape, joiner=', ',
+def serialized_many_to_many_field(field, formatter=unicode, joiner=', ',
                                   short_description=None, linked=False):
     if short_description is None:
         short_description = field
 
+    old_formatter = formatter
     if linked:
-        old_formatter = formatter
-        formatter = lambda obj: print_link(old_formatter(obj), make_admin_url(obj))
+        formatter = lambda obj: print_link(escape(old_formatter(obj)), make_admin_url(obj))
+    else:
+        formatter = lambda obj: escape(old_formatter(obj))
 
     item = lambda obj: joiner.join(formatter(x) for x in getattr(obj, field).all())
     item.allow_tags = True
