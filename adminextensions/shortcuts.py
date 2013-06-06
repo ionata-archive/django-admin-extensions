@@ -5,6 +5,22 @@ from django.utils.html import escape
 
 
 def model_search(text, model, args):
+    """
+    An object tool to link to a change list with a preloaded search term
+
+    `text` is the label to use on the object tool, while `model` is the model
+    class to link to. `args` is a callable that should return a `dict` of
+    querystring arguments when passed an instance of the original model.
+
+    Usage:
+
+        class AuthorModelAdmin(ExtendedModelAdmin):
+            object_tools = {
+                'change': [model_search(
+                    "Books", Book,
+                    lambda author: {'author__id': author.id})]
+            }
+    """
 
     app_label = model._meta.app_label
     module_name = model._meta.module_name
@@ -26,6 +42,23 @@ def model_search(text, model, args):
 
 
 def model_link(text, model, pk_getter, action="change"):
+    """
+    An object tool to link to a related model from a models page
+    Used in `list_display` to link to a related model instance's view/edit page
+
+    `pk_getter` can be either a string naming the pk field of the related
+    model, or a callable which returns the pk of the related model.
+
+    `action` can be any of the admin actions: 'change', 'history', or 'delete'.
+    The default is 'change'
+
+    Usage:
+
+        class BookModelAdmin(ExtendedModelAdmin):
+            object_tools = {
+                'change': [model_link("Author", Author, 'author_id')]
+            }
+    """
 
     app_label = model._meta.app_label
     module_name = model._meta.module_name
@@ -45,6 +78,21 @@ def model_link(text, model, pk_getter, action="change"):
 
 
 def make_admin_url(model, pk=None, action="change"):
+    """
+    Given a model and an action, make a url to the correct admin page
+
+    If `model` is a model instance, that models `pk` is used as the instance to
+    link to. Otherwise, a `pk` to link to must be provided. The function can
+    thus be used with either a model instance, or a Model class and a `pk`.
+
+    Usage:
+        make_admin_url(Foo, pk=10)  # '/admin/app/foo/10/'
+
+        foo = Foo.objects.get(pk=4)
+        make_admin_url(foo)  # '/admin/app/foo/4/'
+        make_admin_url(foo, action="delete")  # '/admin/app/foo/delete/4/'
+
+    """
     app_label = model._meta.app_label.lower()
     module_name = model._meta.module_name
     url_name = "admin:%s_%s_%s" % (app_label, module_name, action)
@@ -58,6 +106,26 @@ def make_admin_url(model, pk=None, action="change"):
 
 def link_field(field, action="change", formatter=unicode,
                short_description=None):
+    """
+    An list field item that links to a related model instance from the
+    changelist view
+
+    `field` is the name of the related model on the source model.
+
+    `action` can be any of the admin actions: 'change', 'history', or 'delete'.
+    The default is 'change'
+
+    `formatter` is used to transform the related model to a string. The default
+    is to call the `__unicode__()` method on the instance.
+
+    `short_description` is used as the column header. It defaults to the field
+    name.
+
+    Usage:
+
+        class BookModelAdmin(ExtendedModelAdmin):
+            list_display = ('name', link_field('author'))
+    """
 
     if short_description is None:
         short_description = field
@@ -81,6 +149,26 @@ def link_field(field, action="change", formatter=unicode,
 
 def serialized_many_to_many_field(field, formatter=unicode, joiner=', ',
                                   short_description=None, linked=False):
+    """
+    Display all the related instances in a ManyToMany relation
+
+    `field` is the name of the relation on the source model.
+
+    `formatter` is used to transform the related instance to a string. The
+    default is to call the `__unicode__()` method on the instance.
+
+    `joiner` is inserted between every instance. Defaults to ', '
+
+    `short_description` is used as the column header. It defaults to the field
+    name.
+
+    If `linked` is True, each model instance is linked to its `change` view.
+
+    Usage:
+
+        class BookModelAdmin(ExtendedModelAdmin):
+            list_display = ('name', serialized_many_to_many_field('publishers'))
+    """
     if short_description is None:
         short_description = field
 
@@ -98,6 +186,20 @@ def serialized_many_to_many_field(field, formatter=unicode, joiner=', ',
 
 
 def truncated_field(field, length=20, short_description=None):
+    """
+    Display a truncated version of `field` in the list display
+
+    The field is limited to `length` words, using Djangos `truncatewords`
+    helper.
+
+    `short_description` is used as the column header. It defaults to the field
+    name.
+
+    Usage:
+
+        class BookModelAdmin(ExtendedModelAdmin):
+            list_display = ('name', serialized_many_to_many_field('publishers'))
+    """
     if short_description is None:
         short_description = field
 
@@ -107,4 +209,8 @@ def truncated_field(field, length=20, short_description=None):
 
 
 def print_link(text, url, class_name=""):
+    """
+    Prints an HTML link, given the inner text, a url, and an optional class
+    name. None of the inputs are escaped.
+    """
     return u'<a href="%s" class="%s">%s</a>' % (url, class_name, text)
