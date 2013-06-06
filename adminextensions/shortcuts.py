@@ -208,6 +208,36 @@ def truncated_field(field, length=20, short_description=None):
     return item
 
 
+def related_field(field, formatter=None, short_description=None):
+    """
+    Show a related field in `list_display`
+
+    `field` is the double-underscore-delimited path to the field to display,
+    such as `author__name`.
+
+    `formatter` takes the value and formats it for display. The default is to
+    just return the value. The Django admin is fairly sensible at formatting
+    things.
+
+    `short_description` is used as the column header. It defaults to `field`.
+    """
+
+    if short_description is None:
+        short_description = field
+
+    if formatter is None:
+        formatter = lambda x: x
+
+    field_path = field.split('__')
+
+    item = lambda obj: formatter(reduce(getattr, field_path, obj))
+    item.allow_tags = False
+    item.short_description = short_description
+    item.admin_order_field = field
+
+    return item
+
+
 def print_link(text, url, class_name=""):
     """
     Prints an HTML link, given the inner text, a url, and an optional class
