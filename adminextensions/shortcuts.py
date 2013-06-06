@@ -30,6 +30,10 @@ def model_link(text, model, pk_getter, action="change"):
     app_label = model._meta.app_label
     module_name = model._meta.module_name
 
+    if isinstance(pk_getter, basestring):
+        pk_name = pk_getter
+        pk_getter = lambda object: getattr(object, pk_name)
+
     def tool(context):
         pk = pk_getter(context['original'])
         if pk:
