@@ -13,8 +13,7 @@ class ObjectToolNode(template.Node):
         bits = token.split_contents()
         tool = bits[1]
         if len(bits) > 2:
-            # Pass second argument, removing quote characters
-            return cls(tool, bits[2][1:-1])
+            return cls(tool, parser.compile_filter(bits[2]))
         return cls(tool)
 
     def __init__(self, tool, link_class=None):
