@@ -22,6 +22,7 @@ def model_search(text, model, args):
         search_url = url + '?' + query_string
 
         return print_link(text, search_url, link_class)
+    tool.do_not_call_in_templates = True
     return tool
 
 
@@ -37,6 +38,7 @@ def model_link(text, model, pk_getter, action="change"):
             return print_link(text, url, link_class)
         else:
             return ''
+    tool.do_not_call_in_templates = True
     return tool
 
 

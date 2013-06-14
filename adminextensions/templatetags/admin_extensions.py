@@ -13,7 +13,7 @@ class ObjectToolNode(template.Node):
     @classmethod
     def handle(cls, parser, token):
         bits = token.split_contents()
-        tool = bits[1]
+        tool = parser.compile_filter(bits[1])
 
         if len(bits) > 2:
             return cls(tool, parser.compile_filter(bits[2]))
@@ -25,7 +25,7 @@ class ObjectToolNode(template.Node):
         self.link_class = link_class
 
     def render(self, context):
-        tool = context[self.tool]
+        tool = self.tool.resolve(context)
         kwargs = {}
 
         if self.link_class:
