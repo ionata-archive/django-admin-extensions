@@ -13,6 +13,6 @@ functionality to the admin site. Extensions include:
 Documentation
 -------------
 
-Documentation can be found [on Ionata's PyPI][docs].
+Documentation can be found [on ReadTheDocs][docs].
 
-[docs]: http://pypi.ionata.com/django-admin-extensions/docs/
+[docs]: https://django-admin-extensions.readthedocs.org/en/latest/
