@@ -2,9 +2,11 @@ from django import template
 
 register = template.Library()
 
+
 @register.tag
 def object_tool(parser, token):
     return ObjectToolNode.handle(parser, token)
+
 
 class ObjectToolNode(template.Node):
 
@@ -12,8 +14,10 @@ class ObjectToolNode(template.Node):
     def handle(cls, parser, token):
         bits = token.split_contents()
         tool = bits[1]
+
         if len(bits) > 2:
             return cls(tool, parser.compile_filter(bits[2]))
+
         return cls(tool)
 
     def __init__(self, tool, link_class=None):
@@ -22,11 +26,9 @@ class ObjectToolNode(template.Node):
 
     def render(self, context):
         tool = context[self.tool]
+        kwargs = {}
+
         if self.link_class:
-            link = tool(context, self.link_class)
-        else:
-            link = tool(context)
-        if link:
-            return '%s' % link
-        else:
-            return ''
+            kwargs['link_class'] = self.link_class.resolve(context)
+
+        return tool(context, **kwargs)

@@ -2,7 +2,6 @@ from django.core.urlresolvers import reverse
 from django.http import QueryDict
 from django.template.defaultfilters import truncatewords
 from django.utils.html import escape
-from django.template.base import FilterExpression
 
 
 def model_search(text, model, args):
@@ -22,9 +21,6 @@ def model_search(text, model, args):
         query_string = qd.urlencode()
         search_url = url + '?' + query_string
 
-        if isinstance(link_class, FilterExpression):
-            link_class = link_class.resolve(context)
-
         return print_link(text, search_url, link_class)
     return tool
 
@@ -38,10 +34,6 @@ def model_link(text, model, pk_getter, action="change"):
         pk = pk_getter(context['original'])
         if pk:
             url = make_admin_url(model, pk=pk, action=action)
-
-            if isinstance(link_class, FilterExpression):
-                link_class = link_class.resolve(context)
-
             return print_link(text, url, link_class)
         else:
             return ''
