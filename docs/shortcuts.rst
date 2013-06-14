@@ -177,6 +177,41 @@ field name. To override this, use the ``short_description`` parameter::
 
 .. _shortcuts.truncated_field:
 
+``related_field``
+===================
+
+The ``related_field`` shows a field on a related model in the change list.
+This is used to display extra data on a related model when the default of
+using the ``__unicode__`` method on the model does not suffice.  It can take
+three arguments, with ``field`` being the only required argument.
+
+``field`` is the double-underscore-delimited path to the field to display,
+such as ``'author__name'``.
+
+``formatter`` takes the value and formats it for display. The default is to
+just return the value. The Django admin is fairly sensible at formatting
+things.
+
+``short_description`` is used as the column header. It defaults to ``field``
+
+Example::
+
+    # in app/admin.py
+
+    from app.models import Author, Genre
+
+    from adminextensions import ExtendedModelAdmin
+    from adminextensions.shortcuts import related_field
+    from django.contrib import admin
+
+    class BookAdmin(ExtendedModelAdmin):
+        list_display = (
+            'title',
+            related_field('author__name'),
+        )
+
+    admin.site.register(Book, BookAdmin)
+
 ``truncated_field``
 ===================
 
