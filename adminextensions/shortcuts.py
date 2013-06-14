@@ -27,7 +27,7 @@ def model_search(text, model, args):
 
     url_name = 'admin:%s_%s_changelist' % (app_label, module_name)
 
-    def tool(context):
+    def tool(context, link_class="model_search"):
 
         url = reverse(url_name)
 
@@ -37,7 +37,8 @@ def model_search(text, model, args):
         query_string = qd.urlencode()
         search_url = url + '?' + query_string
 
-        return print_link(text, search_url, "model_search")
+        return print_link(text, search_url, link_class)
+    tool.do_not_call_in_templates = True
     return tool
 
 
@@ -67,13 +68,14 @@ def model_link(text, model, pk_getter, action="change"):
         pk_name = pk_getter
         pk_getter = lambda object: getattr(object, pk_name)
 
-    def tool(context):
+    def tool(context, link_class="model_search"):
         pk = pk_getter(context['original'])
         if pk:
             url = make_admin_url(model, pk=pk, action=action)
-            return print_link(text, url, "model_search")
+            return print_link(text, url, link_class)
         else:
             return ''
+    tool.do_not_call_in_templates = True
     return tool
 
 

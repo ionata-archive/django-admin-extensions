@@ -36,7 +36,7 @@
         {% if has_absolute_url %}<li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
 
         {% for tool in object_tools %}
-            {% object_tool tool %}
+            <li>{% object_tool tool %}</li>
         {% endfor %}
 
     {% endblock %}
