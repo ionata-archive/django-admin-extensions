@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
 from django.template.defaultfilters import truncatewords
+from django.utils.safestring import mark_safe
 from django.utils.html import escape
 
 
@@ -245,4 +246,5 @@ def print_link(text, url, class_name=""):
     Prints an HTML link, given the inner text, a url, and an optional class
     name. None of the inputs are escaped.
     """
-    return u'<a href="%s" class="%s">%s</a>' % (url, class_name, text)
+    return mark_safe(
+        u'<a href="%s" class="%s">%s</a>' % (url, class_name, text))
