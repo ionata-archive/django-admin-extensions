@@ -4,6 +4,29 @@
 adminextensions.shortcuts
 =========================
 
+.. _shortcuts.register:
+
+``register``
+============
+
+This is a class decorator that makes registering ``ModelAdmin`` classes cleaner.
+Instead of defining your class and then registering it later, it can all be
+done in one step::
+
+    # in app/admin.py
+
+    from app.models import Book
+
+    from adminextensions import ExtendedModelAdmin
+    from admineasierextensions.shortcuts import register
+
+    @register(Book)
+    class BookAdmin(ExtendedModelAdmin):
+        pass
+
+Usage of this decorator is optional. The traditional ``admin.site.register`` is
+still supported — this decorator is just a cleaner wrapper around it.
+
 .. _shortcuts.link_field:
 
 ``link_field``

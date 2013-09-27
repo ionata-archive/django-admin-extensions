@@ -1,8 +1,15 @@
+from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
 from django.template.defaultfilters import truncatewords
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
+
+
+def register(model):
+    def get_class(cls):
+        admin.site.register(model, cls)
+    return get_class
 
 
 def model_search(text, model, args):
