@@ -9,6 +9,7 @@ from django.utils.html import escape
 def register(model):
     def get_class(cls):
         admin.site.register(model, cls)
+        return cls
     return get_class
 
 
