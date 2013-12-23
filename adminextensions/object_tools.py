@@ -90,3 +90,40 @@ def model_link(text, model, pk_getter, action="change"):
         else:
             return ''
     return tool
+
+
+def model_add(text, model, defaults=None):
+    """
+    An object tool that links to the add form for `model`, possibly supplying
+    default values for some fields.
+
+    If supplied, `defaults` should be a callable that returns a dict of
+    default values to be passed to the add form.
+
+    Usage:
+
+        class AuthorModelAdmin(ExtendedModelAdmin):
+            object_tools = {
+                'change': [model_add(
+                    "Add book", Book, lambda author: {'author': author.pk}
+                )]
+            }
+    """
+    app_label = model._meta.app_label
+    module_name = model._meta.module_name
+
+    url_name = 'admin:%s_%s_add' % (app_label, module_name)
+
+    @object_tool
+    def tool(context, link_class="addlink"):
+        url = reverse(url_name)
+
+        if defaults is not None:
+            original = context['original']
+            querydict = QueryDict('', mutable=True)
+            querydict.update(defaults(original))
+
+            url = '?'.join((url, querydict.urlencode()))
+
+        return print_link(text, url, link_class)
+    return tool

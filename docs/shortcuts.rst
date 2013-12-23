@@ -39,13 +39,13 @@ Used in ``list_display`` to create a link to another model. For example::
     from app.models import Book, Author
 
     from adminextensions import ExtendedModelAdmin
-    from adminextensions.shortcuts import link_field
+    from adminextensions.shortcuts import link_field, register
     from django.contrib import admin
 
+    @register(Book)
     class BookAdmin(ExtendedModelAdmin):
         list_display = ('title', link_field('author'))
 
-    admin.site.register(Book, BookAdmin)
     admin.site.register(Author)
 
 By default, links from ``link_field`` point to the ``'change'`` action on the
@@ -77,9 +77,10 @@ Used in ``object_tools`` to create a link to another model. For example::
     from app.models import Book, Author
 
     from adminextensions import ExtendedModelAdmin
-    from adminextensions.shortcuts import link_field
+    from adminextensions.shortcuts import model_link, register
     from django.contrib import admin
 
+    @register(Book)
     class BookAdmin(ExtendedModelAdmin):
         object_tools = {
             'change': [
@@ -87,7 +88,7 @@ Used in ``object_tools`` to create a link to another model. For example::
             ]
         }
 
-    admin.site.register(Book, BookAdmin)
+
     admin.site.register(Author)
 
 The arguments to ``model_link`` are, in order:
@@ -119,9 +120,10 @@ Books by that Author::
     from app.models import Book, Author
 
     from adminextensions import ExtendedModelAdmin
-    from adminextensions.shortcuts import link_field
+    from adminextensions.shortcuts import model_search, register
     from django.contrib import admin
 
+    @register(Author)
     class AuthorAdmin(ExtendedModelAdmin):
         object_tools = {
             'change': [
@@ -129,7 +131,6 @@ Books by that Author::
             ]
         }
 
-    admin.site.register(Author, AuthorAdmin)
     admin.site.register(Book)
 
 The arguments to ``model_link`` are, in order:
@@ -145,6 +146,43 @@ The arguments to ``model_link`` are, in order:
 In the example above, where books are filtered on ``'author__pk'``,
 ``'author'`` would have to be added to the ``valid_lookups`` list on the
 ``BookAdmin``. See the :ref:`valid_lookups` documentation for more information.
+
+.. _shortcuts.model_add:
+
+``model_add``
+=============
+
+Used in ``object_tools`` to create a link to the add form for a model, possibly
+with some defaults::
+
+    # in app/admin.py
+
+    from app.models import Book, Author
+
+    from adminextensions import ExtendedModelAdmin
+    from adminextensions.shortcuts import model_add, register
+    from django.contrib import admin
+
+    @register(Author)
+    class AuthorAdmin(ExtendedModelAdmin):
+        object_tools = {
+            'change': [
+                model_add('Add book', Book,
+                           lambda author: {'author': author.pk}),
+            ]
+        }
+
+    admin.site.register(Book)
+
+The arguments to ``model_add`` are, in order:
+
+*  The text of the link
+
+*  The Model class that will be linked to
+
+*  A callable that, given an instance of the primary model (``Author``, in the
+   example) will return a ``dict`` of default values for the new instance (a
+   ``Book`` in the example).
 
 .. _shortcuts.serialized_many_to_many_field:
 
