@@ -20,13 +20,10 @@ setup(
     author_email='webmaster@ionata.com.au',
     url='https://bitbucket.org/ionata/django-admin-extensions',
 
-    install_requires=['Django>=1.4'],
-    zip_safe=False,
-
     packages=find_packages(),
 
-    include_package_data=True,
     package_data={ },
+    include_package_data=True,
 
     classifiers=[
         'Environment :: Web Environment',
