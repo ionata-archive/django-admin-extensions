@@ -236,7 +236,7 @@ field name. To override this, use the ``short_description`` parameter::
             serialized_many_to_many_field('genre', short_description='writes')
         )
 
-.. _shortcuts.truncated_field:
+.. _shortcuts.related_field:
 
 ``related_field``
 ===================
@@ -273,6 +273,8 @@ Example::
 
     admin.site.register(Book, BookAdmin)
 
+.. _shortcuts.truncated_field:
+
 ``truncated_field``
 ===================
 
@@ -297,3 +299,6 @@ content fields that may have a lot of data. The data is truncated after
 
 A short_description parameter is automatically generated based on the linked
 field name. To override this, use the ``short_description`` parameter.
+
+If the field contains HTML, pass ``strip_html=True`` to the function to strip
+it out.

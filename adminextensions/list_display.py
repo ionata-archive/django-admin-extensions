@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.template.defaultfilters import truncatewords
-from django.utils.html import escape
+from django.utils.html import escape, strip_tags
 
 from .utils import make_admin_url, print_link
 
@@ -103,7 +103,7 @@ def serialized_many_to_many_field(field, formatter=unicode, joiner=', ',
     return item
 
 
-def truncated_field(field, length=20, short_description=None):
+def truncated_field(field, length=20, short_description=None, strip_html=False):
     """
     Display a truncated version of `field` in the list display
 
@@ -123,7 +123,11 @@ def truncated_field(field, length=20, short_description=None):
 
     @link_display_item(short_description)
     def item(obj):
-        return escape(truncatewords(getattr(obj, field), length))
+        text = getattr(obj, field)
+        if strip_html:
+            text = strip_tags(text)
+
+        return escape(truncatewords(text, length))
 
     return item
 
