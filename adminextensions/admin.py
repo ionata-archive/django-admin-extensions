@@ -31,7 +31,7 @@ class ExtendedModelAdmin(admin.ModelAdmin):
     valid_lookups = ()
 
     def get_object_tools(self, request, method):
-        return self.object_tools.get(method, None)
+        return self.object_tools.get(method, [])
 
     def add_view(self, request, form_url='', extra_context=None):
         object_tools = self.get_object_tools(request, 'add')
