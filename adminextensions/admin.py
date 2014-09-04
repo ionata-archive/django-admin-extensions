@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.timezone import now
 
+from .object_tools import object_tool
+
 
 def extend(base, extra):
     if extra is None:
@@ -82,6 +84,7 @@ class ExtendedModelAdmin(admin.ModelAdmin):
         return cl
 
 
+@object_tool
 def export_tool(context):
     request = context['request']
     model = context['cl'].model
@@ -145,10 +148,10 @@ class ExportableModelAdmin(ExtendedModelAdmin):
         raise NotImplementedError
 
     def make_export_response(self, request, data):
-        response = HttpResponse(data.xls,
-                                content_type='application/vnd.ms-excel')
+        response = HttpResponse(''.join(data), status='200',
+                                content_type='text/csv')
 
-        filename = '{0} - {1}.xls'.format(
+        filename = '{0} - {1}.csv'.format(
             self.model._meta.verbose_name_plural.title(),
             now().date().isoformat())
         response['Content-Disposition'] = 'attachment; filename="{0}"'.format(
