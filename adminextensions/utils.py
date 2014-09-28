@@ -40,4 +40,4 @@ def print_link(text, url, class_name=""):
     name. None of the inputs are escaped.
     """
     return mark_safe(
-        u'<a href="%s" class="%s">%s</a>' % (url, class_name, text))
+        '<a href="%s" class="%s">%s</a>' % (url, class_name, text))
