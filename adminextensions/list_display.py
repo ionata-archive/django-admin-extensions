@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.template.defaultfilters import truncatewords
 from django.utils.html import escape, strip_tags
+from django.utils.six import text_type
 
 from .utils import make_admin_url, print_link
 
@@ -23,7 +24,7 @@ def link_display_item(short_description, allow_tags=True,
     return decorator
 
 
-def link_field(field, action="change", formatter=unicode,
+def link_field(field, action="change", formatter=text_type,
                short_description=None):
     """
     An list field item that links to a related model instance from the
@@ -35,7 +36,7 @@ def link_field(field, action="change", formatter=unicode,
     The default is 'change'
 
     `formatter` is used to transform the related model to a string. The default
-    is to call the `__unicode__()` method on the instance.
+    is to call the `__str__()` method on the instance.
 
     `short_description` is used as the column header. It defaults to the field
     name.
@@ -65,7 +66,7 @@ def link_field(field, action="change", formatter=unicode,
     return item
 
 
-def serialized_many_to_many_field(field, formatter=unicode, joiner=', ',
+def serialized_many_to_many_field(field, formatter=text_type, joiner=', ',
                                   short_description=None, linked=False):
     """
     Display all the related instances in a ManyToMany relation
@@ -73,7 +74,7 @@ def serialized_many_to_many_field(field, formatter=unicode, joiner=', ',
     `field` is the name of the relation on the source model.
 
     `formatter` is used to transform the related instance to a string. The
-    default is to call the `__unicode__()` method on the instance.
+    default is to call the `__str__()` method on the instance.
 
     `joiner` is inserted between every instance. Defaults to ', '
 

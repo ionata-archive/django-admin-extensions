@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.utils.encoding import force_text
 from django.utils.timezone import now
 
 from .object_tools import object_tool
@@ -109,7 +110,7 @@ class ExportableModelAdmin(ExtendedModelAdmin):
             self.__class__.export_action,  # Grab the unbound method
             'export',
             'Export selected {0}'.format(
-                unicode(self.model._meta.verbose_name_plural)))
+                force_text(self.model._meta.verbose_name_plural)))
         return actions
 
     def get_urls(self):

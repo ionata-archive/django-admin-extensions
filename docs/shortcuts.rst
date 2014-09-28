@@ -52,7 +52,7 @@ By default, links from ``link_field`` point to the ``'change'`` action on the
 destination model. You can change this by providing the name of another action
 as the ``action`` kwarg.
 
-The destination model is displayed using its ``__unicode__`` method by default.
+The destination model is displayed using its ``__str__`` method by default.
 This can be overridden by supplying a callable as the ``formatter`` kwarg. This
 should accept a single argument, which is the model instance::
 
@@ -213,7 +213,7 @@ The list of models is just plain text by default. Links to the models can be
 printed instead, by supplying ``linked=True`` to
 ``serialized_many_to_many_field``.
 
-The destination models are displayed using their ``__unicode__`` method by
+The destination models are displayed using their ``__str__`` method by
 default.  This can be overridden by supplying a callable as the ``formatter``
 kwarg. This should accept a single argument, which is the model instance::
 
@@ -243,7 +243,7 @@ field name. To override this, use the ``short_description`` parameter::
 
 The ``related_field`` shows a field on a related model in the change list.
 This is used to display extra data on a related model when the default of
-using the ``__unicode__`` method on the model does not suffice.  It can take
+using the ``__str__`` method on the model does not suffice.  It can take
 three arguments, with ``field`` being the only required argument.
 
 ``field`` is the double-underscore-delimited path to the field to display,
