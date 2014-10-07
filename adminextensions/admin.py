@@ -89,22 +89,14 @@ class ExtendedModelAdmin(admin.ModelAdmin):
 def export_tool(context):
     request = context['request']
     model = context['cl'].model
-    querystring = ""
-    queries = []
-
-    for key, val in request.GET.dict().items():
-        if key is not "o":
-            queries.append("{0}={1}".format(key, val))
-
-    querystring = "&".join((queries))
-
-    if querystring is not "":
-        querystring = "?" + querystring
 
     export_url = reverse('admin:{0}_{1}_export'.format(
         model._meta.app_label, model._meta.module_name))
 
-    export_url = export_url + querystring
+    querystring = request.GET.urlencode()
+
+    if querystring:
+        export_url += "?" + querystring
 
     return print_link("Export", export_url, "model_search")
 
