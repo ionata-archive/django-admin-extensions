@@ -1,3 +1,5 @@
+from __future__ import absolute_import, unicode_literals
+
 from adminextensions.shortcuts import print_link
 from django.conf.urls import patterns, url
 from django.contrib import admin
