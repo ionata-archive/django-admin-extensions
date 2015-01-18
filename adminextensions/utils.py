@@ -24,8 +24,8 @@ def make_admin_url(model, pk=None, action="change"):
 
     """
     app_label = model._meta.app_label.lower()
-    module_name = model._meta.module_name
-    url_name = "admin:%s_%s_%s" % (app_label, module_name, action)
+    model_name = model._meta.model_name
+    url_name = "admin:%s_%s_%s" % (app_label, model_name, action)
 
     if pk is None:
         pk = model.pk

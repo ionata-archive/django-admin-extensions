@@ -91,7 +91,7 @@ def export_tool(context):
     model = context['cl'].model
 
     export_url = reverse('admin:{0}_{1}_export'.format(
-        model._meta.app_label, model._meta.module_name))
+        model._meta.app_label, model._meta.model_name))
 
     querystring = request.GET.urlencode()
 
@@ -122,11 +122,11 @@ class ExportableModelAdmin(ExtendedModelAdmin):
         urls = super(ExportableModelAdmin, self).get_urls()
 
         app_label = self.model._meta.app_label
-        module_name = self.model._meta.module_name
+        model_name = self.model._meta.model_name
         my_urls = patterns(
             '',
             url(r'^export/$', self.admin_site.admin_view(self.export),
-                name='{0}_{1}_export'.format(app_label, module_name)),
+                name='{0}_{1}_export'.format(app_label, model_name)),
         )
         return my_urls + urls
 
@@ -134,7 +134,7 @@ class ExportableModelAdmin(ExtendedModelAdmin):
         export_ids = ','.join(map(str, (i.id for i in queryset)))
 
         export_url = reverse('admin:{0}_{1}_export'.format(
-            self.model._meta.app_label, self.model._meta.module_name))
+            self.model._meta.app_label, self.model._meta.model_name))
 
         return redirect('{0}?{1}={2}'.format(
             export_url, self.EXPORT_IDS_KEY, export_ids))
