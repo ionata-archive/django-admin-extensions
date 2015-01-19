@@ -36,9 +36,9 @@ def model_search(text, model, args):
     """
 
     app_label = model._meta.app_label
-    module_name = model._meta.module_name
+    model_name = model._meta.model_name
 
-    url_name = 'admin:%s_%s_changelist' % (app_label, module_name)
+    url_name = 'admin:%s_%s_changelist' % (app_label, model_name)
 
     @object_tool
     def tool(context, link_class="model_search"):
@@ -75,7 +75,7 @@ def model_link(text, model, pk_getter, action="change"):
     """
 
     app_label = model._meta.app_label
-    module_name = model._meta.module_name
+    model_name = model._meta.model_name
 
     if isinstance(pk_getter, basestring):
         pk_name = pk_getter
@@ -110,9 +110,9 @@ def model_add(text, model, defaults=None):
             }
     """
     app_label = model._meta.app_label
-    module_name = model._meta.module_name
+    model_name = model._meta.model_name
 
-    url_name = 'admin:%s_%s_add' % (app_label, module_name)
+    url_name = 'admin:%s_%s_add' % (app_label, model_name)
 
     @object_tool
     def tool(context, link_class="addlink"):
