@@ -92,10 +92,15 @@ def export_tool(context):
     request = context['request']
     model = context['cl'].model
 
-    url = reverse('admin:{0}_{1}_export'.format(
+    export_url = reverse('admin:{0}_{1}_export'.format(
         model._meta.app_label, model._meta.model_name))
 
-    return print_link("Export", url, "model_search")
+    querystring = request.GET.urlencode()
+
+    if querystring:
+        export_url += "?" + querystring
+
+    return print_link("Export", export_url, "model_search")
 
 
 class ExportableModelAdmin(ExtendedModelAdmin):
