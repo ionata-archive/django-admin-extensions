@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
+from django.utils import six
 
 from .utils import print_link, make_admin_url
 
@@ -77,7 +78,7 @@ def model_link(text, model, pk_getter, action="change"):
     app_label = model._meta.app_label
     model_name = model._meta.model_name
 
-    if isinstance(pk_getter, basestring):
+    if isinstance(pk_getter, six.string_types):
         pk_name = pk_getter
         pk_getter = lambda object: getattr(object, pk_name)
 

@@ -2,9 +2,12 @@ from __future__ import absolute_import, unicode_literals
 
 from django.template.defaultfilters import truncatewords
 from django.utils.html import escape, strip_tags
-from django.utils.six import text_type
+from django.utils import six 
 
 from .utils import make_admin_url, print_link
+
+if six.PY3:
+    from functools import reduce
 
 
 __all__ = ['link_field', 'serialized_many_to_many_field', 'truncated_field',
@@ -24,7 +27,7 @@ def link_display_item(short_description, allow_tags=True,
     return decorator
 
 
-def link_field(field, action="change", formatter=text_type,
+def link_field(field, action="change", formatter=six.text_type,
                short_description=None):
     """
     An list field item that links to a related model instance from the
@@ -66,7 +69,7 @@ def link_field(field, action="change", formatter=text_type,
     return item
 
 
-def serialized_many_to_many_field(field, formatter=text_type, joiner=', ',
+def serialized_many_to_many_field(field, formatter=six.text_type, joiner=', ',
                                   short_description=None, linked=False):
     """
     Display all the related instances in a ManyToMany relation
