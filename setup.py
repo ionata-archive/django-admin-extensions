@@ -10,6 +10,9 @@ from setuptools import setup, find_packages
 with open('README.rst', 'r') as f:
     readme = f.read()
 
+with open('adminextensions/version.py', 'r') as f:
+    exec(f.read())
+
 setup(
     name='django-admin-extensions',
     version=__version__,
