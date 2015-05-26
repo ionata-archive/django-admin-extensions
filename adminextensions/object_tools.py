@@ -37,7 +37,8 @@ def model_search(text, model, args):
             }
     """
 
-    model = apps.get_model(model)
+    if isinstance(model, six.string_types):
+        model = apps.get_model(model)
     app_label = model._meta.app_label
     model_name = model._meta.model_name
 
@@ -77,7 +78,8 @@ def model_link(text, model, pk_getter, action="change"):
             }
     """
 
-    model = apps.get_model(model)
+    if isinstance(model, six.string_types):
+        model = apps.get_model(model)
 
     if isinstance(pk_getter, six.string_types):
         pk_name = pk_getter
