@@ -144,15 +144,15 @@ class ExportableModelAdmin(ExtendedModelAdmin):
     def export(self, request):
         if 'export_ids' in request.GET:
             export_ids = request.GET[self.EXPORT_IDS_KEY].split(',')
-            query_set = self.model.objects.filter(id__in=export_ids)
+            queryset = self.model.objects.filter(id__in=export_ids)
         else:
             changelist = self.construct_changelist(request, 'export')
-            query_set = changelist.query_set
+            queryset = changelist.queryset
 
-        data = self.make_export_data(request, query_set)
+        data = self.make_export_data(request, queryset)
         return self.make_export_response(request, data)
 
-    def make_export_data(self, request, query_set):
+    def make_export_data(self, request, queryset):
         raise NotImplementedError
 
     def make_export_response(self, request, data):
