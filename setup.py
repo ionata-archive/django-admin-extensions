@@ -10,6 +10,9 @@ from setuptools import setup, find_packages
 with open('README.rst', 'r') as f:
     readme = f.read()
 
+with open('adminextensions/version.py', 'r') as f:
+    exec(f.read())
+
 setup(
     name='django-admin-extensions',
     version=__version__,
@@ -24,10 +27,19 @@ setup(
     package_data={},
     include_package_data=True,
 
+    install_requires=[
+        'Django>=1.7',
+    ],
+
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python',
         'Framework :: Django',
     ],

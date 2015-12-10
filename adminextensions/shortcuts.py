@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+import warnings
+
 from django.contrib import admin
 
 from .list_display import (
@@ -18,6 +20,9 @@ def register(model):
         class BookAdmin(ExtendedModelAdmin):
             pass
     """
+
+    warnings.warn("Use the django.contrib.admin.register decorator instead",
+                  PendingDeprecationWarning)
     def get_class(cls):
         admin.site.register(model, cls)
         return cls

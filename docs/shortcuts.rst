@@ -9,6 +9,10 @@ adminextensions.shortcuts
 ``register``
 ============
 
+.. note:: Deprecated since 0.9.0. Django now has a very similar decorator,
+          ``django.contrib.admin.register``. Its call signature for this simple
+          case is identical.
+
 This is a class decorator that makes registering ``ModelAdmin`` classes cleaner.
 Instead of defining your class and then registering it later, it can all be
 done in one step::

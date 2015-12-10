@@ -14,4 +14,4 @@ functionality to the admin site. Extensions include:
 Documentation
 =============
 
-Documentation can be found `on ReadTheDocs <https://django-admin-extensions.readthedocs.org/en/latest/>`.
+Documentation can be found `on ReadTheDocs <https://django-admin-extensions.readthedocs.org/en/latest/>`_.

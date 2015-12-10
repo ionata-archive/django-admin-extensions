@@ -13,5 +13,3 @@ Setup
         INSTALLED_APPS += (
             'adminextensions',
         )
-
-.. _Git repository: http://bitbucket.org/ionata/django-bleach/
