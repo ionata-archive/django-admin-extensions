@@ -147,7 +147,7 @@ class ExportableModelAdmin(ExtendedModelAdmin):
             query_set = self.model.objects.filter(id__in=export_ids)
         else:
             changelist = self.construct_changelist(request, 'export')
-            query_set = changelist.query_set
+            query_set = getattr(changelist, 'query_set', changelist.queryset)
 
         data = self.make_export_data(request, query_set)
         return self.make_export_response(request, data)
