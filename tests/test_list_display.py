@@ -18,7 +18,7 @@ class ListDisplayTests(TestCase):
         callable = link_field('simplemodel')
         self.assertHTMLEqual(
             callable(self.parentmodel),
-            '<a href="/admin/app/simplemodel/1/" class="">foo</a>')
+            '<a href="/admin/app/simplemodel/1/change/" class="">foo</a>')
         self.assertEqual(callable.short_description, 'simplemodel')
 
     def test_link_field_description(self):
@@ -29,7 +29,7 @@ class ListDisplayTests(TestCase):
         callable = link_field('simplemodel', formatter=lambda s: s.text.upper())
         self.assertHTMLEqual(
             callable(self.parentmodel),
-            '<a href="/admin/app/simplemodel/1/" class="">FOO</a>')
+            '<a href="/admin/app/simplemodel/1/change/" class="">FOO</a>')
 
     def test_link_field_history(self):
         callable = link_field('simplemodel', action='history')
@@ -86,7 +86,7 @@ class SerializedManyToManyTests(TestCase):
         self.assertEqual(
             callable(self.many),
             ', '.join(
-                '<a href="/admin/app/simplemodel/{}/" class="">{}</a>'.format(s.pk, s.text)
+                '<a href="/admin/app/simplemodel/{}/change/" class="">{}</a>'.format(s.pk, s.text)
                 for s in self.many.simplemodel_set.all()))
 
 

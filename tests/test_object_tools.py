@@ -19,13 +19,13 @@ class ModelLinkTests(BaseTestCase):
         tool = model_link('View', SimpleModel, 'simplemodel_id')
         self.assertHTMLEqual(
             tool({'original': self.parentmodel}),
-            '<a href="/admin/app/simplemodel/{}/" class="model_search">View</a>'.format(self.simplemodel.pk))
+            '<a href="/admin/app/simplemodel/{}/change/" class="model_search">View</a>'.format(self.simplemodel.pk))
 
     def test_model_link_callable_getter(self):
         tool = model_link('View', SimpleModel, lambda p: p.simplemodel_id)
         self.assertHTMLEqual(
             tool({'original': self.parentmodel}),
-            '<a href="/admin/app/simplemodel/{}/" class="model_search">View</a>'.format(self.simplemodel.pk))
+            '<a href="/admin/app/simplemodel/{}/change/" class="model_search">View</a>'.format(self.simplemodel.pk))
 
     def test_model_link_action(self):
         tool = model_link('History', SimpleModel, 'simplemodel_id', action='history')

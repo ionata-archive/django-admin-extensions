@@ -49,4 +49,4 @@ class AdminTests(TestCase):
 
         changelist = self.get_changelist(ParentModel)
         self.assertContains(
-            changelist, '<a href="/admin/app/simplemodel/{}/" class="">foo</a>'.format(simple.pk))
+            changelist, '<a href="/admin/app/simplemodel/{}/change/" class="">foo</a>'.format(simple.pk))

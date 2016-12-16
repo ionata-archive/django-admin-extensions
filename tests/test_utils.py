@@ -13,10 +13,10 @@ class UtilTests(TestCase):
         instance = SimpleModel.objects.create(pk=3)
 
         self.assertEqual(make_admin_url(SimpleModel, pk='5'),
-                         '/admin/app/simplemodel/5/')
+                         '/admin/app/simplemodel/5/change/')
 
         self.assertEqual(make_admin_url(instance),
-                         '/admin/app/simplemodel/3/')
+                         '/admin/app/simplemodel/3/change/')
 
         self.assertEqual(make_admin_url(SimpleModel, pk='5', action='history'),
                          '/admin/app/simplemodel/5/history/')
