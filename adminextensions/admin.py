@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from adminextensions.shortcuts import print_link
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
@@ -125,11 +125,10 @@ class ExportableModelAdmin(ExtendedModelAdmin):
 
         app_label = self.model._meta.app_label
         model_name = self.model._meta.model_name
-        my_urls = patterns(
-            '',
+        my_urls = [
             url(r'^export/$', self.admin_site.admin_view(self.export),
                 name='{0}_{1}_export'.format(app_label, model_name)),
-        )
+        ]
         return my_urls + urls
 
     def export_action(self, request, queryset):
